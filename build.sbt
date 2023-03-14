@@ -1,11 +1,10 @@
 import com.typesafe.sbt.SbtGit.{GitKeys => git}
 
+lazy val commonSettings = BuildConfig.commonSettings(currentVersion = "8.1")
+
 enablePlugins(GhpagesPlugin, SiteScaladocPlugin)
 
 name := "twitter4s"
-version := "8.1-SNAPSHOT"
-
-scalaVersion := "2.13.6"
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
@@ -46,12 +45,10 @@ ThisBuild / scalacOptions ++= Seq("-language:postfixOps",
                                   "-deprecation:false")
 
 lazy val standardSettings = Seq(
-  organization := "com.danielasfregola",
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-  homepage := Some(url("https://github.com/DanielaSfregola/twitter4s")),
+  homepage := Some(url("https://github.com/curalate/twitter4s")),
   scmInfo := Some(
-    ScmInfo(url("https://github.com/DanielaSfregola/twitter4s"),
-            "scm:git:git@github.com:DanielaSfregola/twitter4s.git")),
+    ScmInfo(url("https://github.com/curalate/twitter4s"), "scm:git:git@github.com:curalate/twitter4s.git")),
   apiURL := Some(url("http://DanielaSfregola.github.io/twitter4s/latest/api/")),
   crossScalaVersions := Seq(scalaVersion.value, "2.12.15"),
   pomExtra :=
@@ -62,12 +59,7 @@ lazy val standardSettings = Seq(
           <url>http://danielasfregola.com/</url>
         </developer>
       </developers>,
-  publishMavenStyle := true,
-  publishTo := {
-    if (version.value.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
-    else Some(Opts.resolver.sonatypeStaging)
-  },
-  git.gitRemoteRepo := "git@github.com:DanielaSfregola/twitter4s.git",
+  git.gitRemoteRepo := "git@github.com:curalate/twitter4s.git",
   scalacOptions ++= Seq(
     "-encoding",
     "UTF-8",
@@ -100,7 +92,17 @@ ThisBuild / scalafmtTestOnCompile := true
 SiteScaladoc / siteSubdirName := version + "/api"
 
 lazy val root = (project in file("."))
-  .settings(standardSettings ++ coverageSettings)
+  .settings(standardSettings ++ coverageSettings ++ commonSettings)
   .settings(
     name := "twitter4s"
   )
+
+/** Task to print the version on command line **/
+lazy val showVersion = taskKey[Unit]("Show version")
+
+showVersion := {
+  println(version.value)
+}
+
+// custom alias to hook in any other custom commands
+addCommandAlias("build", "; compile")
