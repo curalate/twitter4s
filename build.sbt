@@ -50,7 +50,7 @@ lazy val standardSettings = Seq(
   scmInfo := Some(
     ScmInfo(url("https://github.com/curalate/twitter4s"), "scm:git:git@github.com:curalate/twitter4s.git")),
   apiURL := Some(url("http://DanielaSfregola.github.io/twitter4s/latest/api/")),
-  crossScalaVersions := Seq(scalaVersion.value, "2.12.15"),
+  crossScalaVersions := Seq(scalaVersion.value),
   pomExtra :=
     <developers>
         <developer>
