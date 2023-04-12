@@ -4,3 +4,4 @@ package com.danielasfregola.twitter4s.entities
   * Have a look at `rate_limit` for more information on current rates usage.
   */
 final case class RatedData[T](rate_limit: RateLimit, data: T)
+final case class ResponseData[T](data: T)

@@ -24,8 +24,7 @@ private[twitter4s] trait JsonSupport extends Json4sSupport {
 
   private val defaultFormats = new DefaultFormats {
     override def dateFormatter = DateTimeFormatter.formatter
-  }.preservingEmptyValues
-
+  }
 }
 
 private[twitter4s] object DateTimeFormatter {
